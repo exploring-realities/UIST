@@ -1,3 +1,7 @@
+
+# Created by https://www.gitignore.io/api/unity,visualstudiocode
+
+### Unity ###
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
@@ -32,3 +36,13 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history
+
+# End of https://www.gitignore.io/api/unity,visualstudiocode
