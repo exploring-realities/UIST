@@ -7,7 +7,7 @@ public class RayCastController : MonoBehaviour {
 	public Material highlightMat;
 	public GameObject camera;
 	private Renderer objRend;
-	private Material initialMat;
+	public Material initialMat;
 	private GameObject selectedObj;
 	private bool selected = false;
 
@@ -16,29 +16,39 @@ public class RayCastController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
-			RaycastHit hit;
-		Vector3 fwd = transform.TransformDirection(Vector3.back);
-		Debug.DrawRay(transform.position, fwd, Color.red);
+		RaycastHit hit;
+		Vector3 direction = transform.TransformDirection(Vector3.forward);
+		Debug.DrawRay(this.transform.position, direction, Color.red, 0.1f);
 
-
-		objRend.material = initialMat;
 		
 
-        if (Physics.Raycast(transform.position, fwd, out hit)){
-		
-			if(!selected){
+        if (Physics.Raycast(this.transform.position, direction, out hit)){
 
+			if(hit.collider.tag == "Target"){
+				
 				selectedObj = hit.collider.transform.gameObject;
-				objRend = selectedObj.GetComponent<Renderer>();
-				initialMat = objRend.material;
-
+				selectedObj.GetComponent<Renderer>().material = highlightMat;
 				selected = true;
-				objRend.material = highlightMat;
-
 			}
 
+		if(Input.GetKeyDown(KeyCode.Space) && selected){
+			
+			 selectedObj.transform.parent = this.transform;
+			
 		}
+							
+		}
+		else if(selected)
+		{
+			selectedObj.GetComponent<Renderer>().material = initialMat;
+			selected = false;
+		}
+		else if(Input.GetKeyUp(KeyCode.Space)){
 
+			selectedObj.transform.parent = camera.transform;
+		}
 
 	}
 }
+
+
